@@ -1,4 +1,4 @@
-# learn-python-projects
+s# learn-python-projects
 
 Click the snake to see the code and explanation about my code
 <!-- 
@@ -14,6 +14,494 @@ Click the snake to see the code and explanation about my code
 
 *******************************************
 -->
+<details><summary>:snake: Hangman with translation to another language</summary>
+<p>
+
+```python
+import sys
+import random
+from translate import Translator
+translator = Translator(to_lang="fr")
+
+#import draw_man
+
+with open("./word_list.txt") as word_file:
+    word_list = word_file.read().split()
+word_guess = word_list[random.randrange(len(word_list))]
+#word_guess = "eat"
+translation = translator.translate(word_guess)
+word = list(translation)
+print("guess this word in France")
+print(word_guess)
+#print(translation)
+list_word =[]
+for i in range(len(word)):
+    print('_', end = " ")
+    list_word.append('_')
+#print(list_word)
+wrong_list =[]
+#count = 0
+while True:
+
+
+    if len(wrong_list) == 5:
+        print()o
+        print("you are hanged")
+        print(f" the word is : {translation}")
+
+        break
+        
+    elif list_word == word:
+
+        print("***************")
+        print("you win !")
+        break
+    letter = input("\n input a letter:")
+    for i in range(len(word)) :
+
+        if letter == word[i]:
+
+            list_word[i] = letter
+    if letter not in word:
+        wrong_list.append(letter)
+        #count +=1
+       # draw_man()
+    #print(list_word)
+    for i in list_word:
+
+        print(i, end=" ")
+    print()
+   # print(wrong_list)
+    print(" wrong  letter")
+    for i in wrong_list:
+        print(i, end = " ")
+
+
+
+```
+</p>
+</details>
+
+
+<details><summary>:snake: language detection and translation with Tkinter</summary>
+<p>
+
+```python
+from tkinter import *
+from translate import Translator
+from langdetect import detect
+from tkinter import ttk, messagebox
+from langcodes import *
+import googletrans
+from googletrans import Translator
+import textblob
+
+root = Tk()
+root.title('Tri - language Detection!')
+#root.geometry("500x350")
+root.geometry("880x500")
+translator = Translator()
+def translate_it():
+    translate_text.delete(1.0, END)
+    try:
+       for key, value in languages.items():
+           if (value == original_combo.get()):
+               from_language_key = key
+
+       for key, value in languages.items():
+           if (value == translated_combo.get()):
+               to_language_key = key
+       words = textblob.TextBlob(original_text.get(1.0, END))
+       words = words.translate(from_lang=from_language_key , to=to_language_key)
+       translate_text.insert(1.0, words)
+    except Exception as e:
+       messagebox.showerror("Translator", e)
+
+def clear():
+    original_text.delete(1.0, END)
+    translate_text.delete(1.0, END)
+
+
+
+languages = googletrans.LANGUAGES
+
+
+language_list =list(languages.values())
+print(language_list)
+
+
+
+original_text = Text(root, height=10, width=40)
+original_text.grid(row=0, column=0, pady=20, padx=10)
+
+translate_button = Button(root, text="Translate!",font=("Helvetica",24),command=translate_it)
+translate_button.grid(row=0, column=1, padx=10)
+
+translate_text = Text(root, height=10, width=40)
+translate_text.grid(row=0, column=2, pady=20, padx=10)
+
+original_combo=ttk.Combobox(root, width=20, value=language_list)
+original_combo.current(21)
+original_combo.grid(row=1, column=0)
+
+translated_combo=ttk.Combobox(root, width=20, value=language_list)
+translated_combo.current(21)
+translated_combo.grid(row=1, column=2)
+
+clear_button = Button(root, text="Clear", command=clear)
+clear_button.grid(row=2, column=1)
+
+
+
+
+
+def check_lang():
+    if original_text.compare("end-1c","==", "1.0"):
+        my_label.config(text="hey! You forget thing")
+    else:
+        code = detect(original_text.get(1.0, END))
+        #code =detectlanguage(original_text.get(1.0, END))
+        my_label.config(text=f"your language is : {code}")
+
+
+# my_text = Text(root, height=10, width=50)
+# my_text.grid(row=3, column=0, pady=20, padx=10)
+my_button = Button(root, text="check Language", command=check_lang)
+my_button.grid(row=3, column=1, pady=20, padx=10)
+
+my_label = Label(root, text="")
+my_label.grid(row=3, column=2, pady=20, padx=10)
+
+
+
+
+root.mainloop()
+
+
+# bahasa = detect("dhahar")
+# print(bahasa)
+#
+#
+# translator= Translator(to_lang="id")
+# translation = translator.translate("Good Morning!")
+# print(translation)
+
+```
+</p>
+</details>
+
+
+<details><summary>:snake: most 10 frequent words from a text file with decending order</summary>
+<p>
+
+```python
+f = open ('./science.txt','r') #replace science.txt with a file
+unik ={}
+for line in f:
+    words = line.split()
+
+    for word in words:
+        if word not in unik:
+            unik[word] = 1
+        else:
+            unik[word] = unik[word] + 1
+sorted_unik = sorted(unik.items(),key=lambda item:item[1], reverse = True)
+count = 0
+for k in sorted_unik:
+    if count < 10:
+        print(k)
+    count +=1
+print(words)
+
+
+```
+</p>
+</details>
+
+<details><summary>:snake: socket connection</summary>
+<p>
+
+```python
+import socket
+
+my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+ip = socket.gethostbyname('www.amazon.com')
+print(ip)
+port = 80
+my_socket.connect( (ip, port)        )
+print(" I connected")
+
+```
+</p>
+</details>
+
+<details><summary>:snake: socket server</summary>
+<p>
+
+```python
+import socket
+a = dir(socket)
+print(a)
+s = socket.socket()
+print("made socket object")
+port = 12345
+s.bind(('',port))
+print((f"Socket bound to port {port}"))
+s.listen()
+print("Socket is listening")
+connection_count = 1
+#Connection is socket object
+#address is the IP address
+while True:
+
+    connection, address = s.accept()
+
+    print(f"Server got connection frm {address}")
+    if connection_count == 10 :
+        connection.send(f"You are lucky".encode())
+    else:
+        connection.send(f"welcome to my server Thank you for connecting you are client number {connection_count}".encode())
+    connection_count +=1
+    connection.close()
+
+
+```
+</p>
+</details>
+
+<details><summary>:snake: socket client </summary>
+<p>
+
+```python
+import socket
+s = socket.socket()
+port = 12345
+s.connect(('127.0.0.1', port))
+incoming_message = s.recv(1024).decode()
+print(incoming_message)
+
+
+```
+</p>
+</details>
+
+<details><summary>:snake: Webscrape with beautifull soup</summary>
+<p>
+
+```python
+from bs4 import BeautifulSoup
+import requests
+
+
+url = "https://www.basketball-reference.com/leagues/NBA_2022_totals.html"
+result = requests.get(url)
+document = bs4.BeautifulSoup(result.text, "html.parser")
+rows = document.find_all("tr", "full_table")
+players = []
+count = 0
+for row in rows:
+    stats = row.find_all("td")
+    player = []
+    for stat in stats:
+        if stat.attrs('data-stat') == 'player':
+            player.append(stat.text)
+            count +=1
+        elif stat.attrs['data-stat']=='pts':
+            player.append(float(stat.text))
+    players.append(player)
+
+print()
+players.sort(key=lambda l:l[1],reverse=True)
+print(player)
+
+```
+</p>
+</details>
+
+
+<details><summary>:snake: Random letter</summary>
+<p>
+
+```python
+import random
+import string
+
+text = ""
+for letter in string.ascii_lowercase:
+    count = random.randrange(30)
+    for i in range(count):
+        text = text + letter + " "
+
+print(text)
+
+#find the most frequent  letter inside of the variable text.
+
+text = text.split(" ")
+letters={}
+
+for i in text:
+    if  i not in  letters :
+        letters[i] = 1
+    else:
+        letters[i] = letters[i]+1
+print(letters)
+sorted_values = sorted(letters.values())
+sorted_letters ={}
+for i in sorted_letters:
+    for k in letters.keys():
+        if letters[k] == i:
+            sorted_letters[k] = letters[k]
+            break
+
+sorted_letters = sorted(letters.items(),key=lambda item:item[1], reverse = True)
+
+#sorted_letters.reversed()
+print(sorted_letters)
+count =0
+#for i in sorted_letters:
+for k in sorted_letters:
+    if count < 10:
+        print(k)
+    count +=1
+biggest = 0
+for i in letters:
+    if letters[i] > biggest:
+        biggest = letters[i]
+        biggest_key = i
+
+
+print(f"the most frequent letter is {biggest_key}, it has {biggest} letter ")
+
+#sorted_letters = dict(sorted(letters.items(),key=lambda item:item[1]))
+#sorted_letters.reverse()
+#print(sorted_letters)
+# count = 0
+# for key in sorted_letters:
+#     print(key)
+#     count +=1
+#     if count == 10:
+#         break
+# #
+# print(letters)
+# print(sorted(letters.values(), reverse = True))
+# l = len(letters)
+# for i in range(l-1):
+#     for j in range(i+1,l):
+#         if letters[i] > letters[j]:
+#             t = letters[i]
+#             letters[i][1] = letters[j][1]
+#             letters[j]= t
+#         sort_letters = dict(letters)
+#         print(sort_letters)
+
+
+```
+</p>
+</details>
+
+
+<details><summary>:snake: Rock paper scissors lizard spock</summary>
+<p>
+
+```python
+import random
+
+options = ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock']
+
+# winners = {
+#     "Rock": ["Scissors", "Lizard"],
+#     "Paper": ["Rock", "Spock"],
+#     "Scissors": ["Paper", "Lizard"],
+#     "Lizard": ["Paper", "Spock"],
+#     "Spock": ["Rock", "Scissors"]
+#     }
+
+
+winners = {
+    "Rock": {"Scissors": "crushes", "Lizard": "crushes"},
+    "Paper": {"Rock": "covers", "Spock": "disproves"},
+    "Scissors": {"Paper": "cuts", "Lizard": "decapitates"},
+    "Lizard": {"Paper": "eats", "Spock": "poisons"},
+    "Spock": {"Rock": "vaporizes", "Scissors": "smashes"}
+}
+
+while True:
+    user_choice = input("Rock, Paper, Scissors, Lizard, Spock: ")
+    computer_choice = random.choice(options)
+    print()
+    print(f"You choose {user_choice}")
+    print(f"Computer chose {computer_choice}")
+    print()
+    if user_choice == computer_choice:
+        print("Tie")
+    elif computer_choice in winners[user_choice]:
+        print(f"{user_choice} {winners[user_choice][computer_choice]} {computer_choice}")
+        print("You Win")
+    else:
+        print(f"{computer_choice} {winners[computer_choice][user_choice]} {user_choice}")
+        print("You Lose")
+
+
+# SIMPLE ROCK PAPER SCISSORS
+
+# options = ['Rock', 'Paper', 'Scissors']
+#
+# user_choice = input("Rock, Paper or Scissors: ")
+# computer_choice = random.choice(options)
+# print()
+# print(f"You choose {user_choice}")
+# print(f"Computer chose {computer_choice}")
+# print()
+# if user_choice == computer_choice:
+#     print("Tie")
+# elif user_choice == "Paper" and computer_choice == "Rock":
+#     print("You Win!")
+# elif user_choice == "Rock" and computer_choice == "Scissors":
+#     print("You Win!")
+# elif user_choice == "Scissors" and computer_choice == "Paper":
+#     print("You Win!")
+# else:
+#     print("You Lose")
+# print()
+# print()
+#
+# # elif options[options.index(computer_choice)] == options[options.index(user_choice) - 1]:
+# #     print("You Win!")
+
+```
+</p>
+</details>
+
+
+<details><summary>:snake: Rock paper scissors </summary>
+<p>
+
+```python
+import random
+
+list = ["rock", "paper","scissor"]
+while True:
+    my_chose = input(" chose 'rock,paper,scissor or exit to finish: ")
+    if my_chose == "exit":
+        break
+    comp_chose = list[random.randrange(len(list))]
+    print(f"computer chose {comp_chose}")
+    if my_chose == comp_chose:
+        print("Tie")
+    elif my_chose == "scissor" and comp_chose == "paper":
+        print("You Win !")
+    elif my_chose == "rock" and comp_chose == "scissor":
+        print("You Win !")
+    elif my_chose == "paper" and comp_chose == "rock":
+        print("You Win !")
+    else:
+        print("you lose !")
+
+
+```
+</p>
+</details>
+
 <details><summary>:snake: Read , write with pickle</summary>
 <p>
 
