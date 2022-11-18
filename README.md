@@ -1,4 +1,4 @@
-s# learn-python-projects
+## learn-python-projects
 
 Click the snake to see the code and explanation about my code
 <!-- 
